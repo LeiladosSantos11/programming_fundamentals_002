@@ -22,30 +22,126 @@ const catalogue = [
   "The Origin of Species by Charles Darwin (50)"
 ];
 
+
 function checkBook(title) {
   if (!title) throw new Error("Please provide a title");
-  // Your code here
+  let result = false;
+  for (let i = 0; i < catalogue.length; i++) {
+      const book = catalogue[i];
+      if (book.includes(title)) {
+          result = true;
+      }
+  }
+  return result;
 }
 
-function countBooksByKeyword(keyword) {
-  if (!keyword) throw new Error("Please provide a keyword");
-  // Your code here
-}
+
+
+
+
+
+if (!keyword) throw new Error("Please provide a keyword");
+    if (typeof keyword !== "string") throw new Error("Please provide the title of the book");
+    // Your code here
+    let count = 0;
+    for (let i = 0; i < catalogue.length; i++) {
+
+        const book = catalogue[i];
+
+        if (book.toLowerCase().includes(keyword.toLowerCase())) {
+            count++;
+        }
+    }
+    return count;
+
+
 
 function getBooksByAuthor(author) {
   if (!author) throw new Error("Please provide an author");
   // Your code here
+    if (!author) throw new Error("Please provide an author");
+    // Your code here
+    let booksByAuthor = [];
+
+    for (let i = 0; i < catalogue.length; i++) {
+        const book = catalogue[i];
+
+        if (book.includes(author)) {
+            let searchItem = "by";
+            let indexBy = book.indexOf(searchItem);
+
+            booksByAuthor.push(book.slice(0, indexBy - 1))
+        }
+    }
+    return booksByAuthor;
 }
 
 function getStockCount(title) {
   if (!title) throw new Error("Please provide a title");
   // Your code here
+    if (!title) throw new Error("Please provide a title");
+    // Your code here
+    let result;
+
+    for (let i = 0; i < catalogue.length; i++) {
+        const book = catalogue[i];
+
+        if (book.includes(title)) {
+
+            const exp = /(\d+)\)$/;
+            result = exp.exec(book).slice(-1);
+
+            result = Number(result);
+        }
+    }
+
+    if (typeof result === 'undefined') result = 'Not in our catalogue';
+
+    return result;
 }
+
+
+
 
 function stockReview(title) {
   if (!title) throw new Error("Please provide a title");
   // Your code here
+    if (!title) throw new Error("Please provide a title");
+    // Your code here
+    const stock = getStockCount(title);
+
+    let result = "";
+    /*
+        if (stock === 0) {
+            result = 'Not in Stock';
+        } else if (stock >= 1 && stock <= 5) {
+            result = 'Low Stock';
+        } else if (stock > 5 && stock <= 10) {
+            result = 'Medium Stock';
+        } else if (stock > 10) {
+            result = 'High Stock'
+        }
+    */
+
+    switch (true) {
+        case stock === 0:
+            result = 'Not in Stock';
+            break;
+        case stock >= 1 && stock <= 5:
+            result = 'Low Stock';
+            break;
+        case stock > 5 && stock <= 10:
+            result = 'Medium Stock';
+            break;
+        case stock > 10:
+            result = 'High Stock'
+            break;
+    }
+
+    return result;
 }
+
+
 
 module.exports = {
   checkBook,
